@@ -15,7 +15,12 @@
 **/
 
 #include "stdio.h"
+#include "stdlib.h"
 #include "stdbool.h"
+
+/*******************************************************************************
+ *  FUNCTIONS
+ ******************************************************************************/
 
 /**
  *  @brief: Prompts user to see what memory type to use to allocate array
@@ -37,8 +42,14 @@ bool is_dynamic()
     return dynamic;
 }
 
+/*******************************************************************************
+ *  MAIN
+ ******************************************************************************/
+
 int main(int argc, char const *argv[])
 {
+    int num_rows = atoi(argv[1]);
+
     if (is_dynamic())
     {
         printf("dynamic\n");
