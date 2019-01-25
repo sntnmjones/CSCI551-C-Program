@@ -47,7 +47,9 @@ bool is_dynamic()
 
 
 /**
- *
+ *  @brief:     Creates 2D array with malloc and populates it with random
+ *                   numbers below 100.
+ *  @return:    Returns pointer to array.
  */
 int* create_array(int grid_size)
 {
@@ -69,14 +71,37 @@ int* create_array(int grid_size)
 /**
  *
  */
+int* add_arrays(int* array_A, int* array_B, int grid_size)
+{
+    int* result = create_array(grid_size);
+
+    for (int row = 0; row < grid_size; row++)
+    {
+        for (int col = 0; col < grid_size; col++)
+        {
+            *(result + row * grid_size + col) =
+                    *(array_A + row * grid_size + col) +
+                    *(array_A + row * grid_size + col);
+        }
+    }
+
+    return result;
+}
+
+
+/**
+ *
+ */
 void dynamic_stuff(int grid_size)
 {
     int *array_A = create_array(grid_size);
     int *array_B = create_array(grid_size);
 
+    int *array_C = add_arrays(array_A, array_B, grid_size);
 
     free(array_A);
     free(array_B);
+    free(array_C);
 }
 
 
