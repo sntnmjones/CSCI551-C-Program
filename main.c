@@ -29,6 +29,7 @@
 /**
  *  @brief: Prompts user to see what memory type to use to allocate array
  *           memory.
+ *  @return: Returns true if user selects dynamic memory, false for automatic
  */
 bool is_dynamic()
 {
@@ -70,7 +71,10 @@ int* create_array(int grid_size)
 
 
 /**
+ *  @brief:  Adds numbers at corresponding locations in 2D arrays 'A' and
+ *  'B', stores result in new 2D array 'result'.
  *
+ *  @return:  Returns pointer to array.
  */
 int* add_arrays(int* array_A, int* array_B, int grid_size)
 {
@@ -91,6 +95,8 @@ int* add_arrays(int* array_A, int* array_B, int grid_size)
 
 
 /**
+ * @brief: Using dynamic memory, creates 2D arrays, calls function to
+ * add them together.
  *
  */
 void dynamic_stuff(int grid_size)
@@ -100,21 +106,6 @@ void dynamic_stuff(int grid_size)
 
     int *array_C = add_arrays(array_A, array_B, grid_size);
 
-    struct rusage usage;
-
-    if (getrusage(RUSAGE_SELF, &usage))
-    {
-        printf("getrusage no worky\n");
-    }
-    else
-    {
-        printf("User CPU time: %li.%li\n", usage.ru_utime.tv_sec,
-                usage.ru_utime.tv_usec);
-        printf("System CPU time: %li.%li\n", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
-        printf("Max resident set size: %li\n", usage.ru_maxrss);
-    }
-
-
     free(array_A);
     free(array_B);
     free(array_C);
@@ -122,6 +113,8 @@ void dynamic_stuff(int grid_size)
 
 
 /**
+ * @brief: Using automatic memory, creates 2D arrays, adds them together,
+ * stores results in third 2D array.
  *
  */
 void auto_stuff(int grid_size)
@@ -146,18 +139,15 @@ void auto_stuff(int grid_size)
       C_grid[row][col] = (A_grid[row][col] + B_grid[row][col]);
     }
   }
+}
 
-  /*
-  for (int row = 0; row < n; row++)
-  {
-    for (int col = 0; col < n; col++)
-    {
-      printf("A: %d\n", A_grid[row][col]);
-      printf("B: %d\n", B_grid[row][col]);
-    }
-    printf("\n\n");
-  }
-  */
+
+/*
+ * @brief:  Prints timing results of program.
+ *
+ */
+void print_time()
+{
     struct rusage usage;
 
     if (getrusage(RUSAGE_SELF, &usage))
@@ -171,7 +161,6 @@ void auto_stuff(int grid_size)
         printf("System CPU time: %li.%li\n", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
         printf("Max resident set size: %li\n", usage.ru_maxrss);
     }
-
 }
 
 
@@ -190,6 +179,7 @@ int main(int argc, char const *argv[])
     {
         auto_stuff(grid_size);
     }
+    print_time();
 
     return 0;
 }
