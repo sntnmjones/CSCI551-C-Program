@@ -126,7 +126,52 @@ void dynamic_stuff(int grid_size)
  */
 void auto_stuff(int grid_size)
 {
-    printf("Auto stuff not complete.\n");
+  int n = grid_size;
+  srand(time(NULL));
+
+  // create three 2D arrays
+  int A_grid[n][n];
+  int B_grid[n][n];
+  int C_grid[n][n];
+
+  // Iterate through 2D arrays, assign random values for each,
+  // add numbers at corresponding locations, store result in
+  // third 2D array.
+  for (int row = 0; row < n; row++)
+  {
+    for (int col = 0; col < n; col++)
+    {
+      A_grid[row][col] = rand() % 100;
+      B_grid[row][col] = rand() % 100;
+      C_grid[row][col] = (A_grid[row][col] + B_grid[row][col]);
+    }
+  }
+
+  /*
+  for (int row = 0; row < n; row++)
+  {
+    for (int col = 0; col < n; col++)
+    {
+      printf("A: %d\n", A_grid[row][col]);
+      printf("B: %d\n", B_grid[row][col]);
+    }
+    printf("\n\n");
+  }
+  */
+    struct rusage usage;
+
+    if (getrusage(RUSAGE_SELF, &usage))
+    {
+        printf("getrusage no worky\n");
+    }
+    else
+    {
+        printf("User CPU time: %li.%li\n", usage.ru_utime.tv_sec,
+                usage.ru_utime.tv_usec);
+        printf("System CPU time: %li.%li\n", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+        printf("Max resident set size: %li\n", usage.ru_maxrss);
+    }
+
 }
 
 
