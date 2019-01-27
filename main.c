@@ -7,10 +7,10 @@
  *
  *  Requirements:
  *      + use c99
- *      - add 2 matrices that are 10,000 x 10,000
+ *      + add 2 matrices that are 10,000 x 10,000
  *      + cmd arg : 'n' which will be the number of rows
  *      + use scanf to determine whether the array will be dynamic or automatic
- *      - randomly populate arrays A & B
+ *      + randomly populate arrays A & B
  *      - printf timing results of sum
  *
  *  References:
@@ -21,6 +21,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
+#include "sys/resource.h"
 
 /*******************************************************************************
  *  FUNCTIONS
@@ -98,6 +99,21 @@ void dynamic_stuff(int grid_size)
     int *array_B = create_array(grid_size);
 
     int *array_C = add_arrays(array_A, array_B, grid_size);
+
+    struct rusage usage;
+
+    if (getrusage(RUSAGE_SELF, &usage))
+    {
+        printf("getrusage no worky\n");
+    }
+    else
+    {
+        printf("User CPU time: %li.%li\n", usage.ru_utime.tv_sec,
+                usage.ru_utime.tv_usec);
+        printf("System CPU time: %li.%li\n", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+        printf("Max resident set size: %li\n", usage.ru_maxrss);
+    }
+
 
     free(array_A);
     free(array_B);
