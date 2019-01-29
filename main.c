@@ -1,5 +1,6 @@
 /**
- *  Authors: Troy Jones & Gregory Bertagna
+ *  Authors: 
+ *      Troy Jones & Gregory Bertagna
  *
  *  Purpose:
  *      - Add two random matrices together and print out the time it takes to
